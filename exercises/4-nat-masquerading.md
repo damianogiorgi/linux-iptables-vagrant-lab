@@ -95,8 +95,8 @@ MASQUERADE is perfect for dynamic IP addresses and automatically uses the outgoi
 vagrant ssh firewall
 
 # Enable NAT for internal networks accessing outside
-sudo iptables -t nat -A POSTROUTING -s 192.168.200.0/24 -o enp0s8 -j MASQUERADE
-sudo iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -o enp0s8 -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -s 192.168.200.0/24 -o eth1 -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -o eth1 -j MASQUERADE
 
 # Check the NAT rules
 sudo iptables -t nat -L -v -n
@@ -171,10 +171,8 @@ vagrant ssh firewall
 vagrant ssh firewall
 
 # NAT only HTTP traffic (example)
-sudo iptables -t nat -A POSTROUTING -s 192.168.200.0/24 -p tcp --dport 80 -o enp0s8 -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -s 192.168.200.0/24 -p tcp --dport 80 -o eth1 -j MASQUERADE
 
-# NAT with port range (for multiple connections)
-sudo iptables -t nat -A POSTROUTING -s 192.168.200.0/24 -o enp0s8 -j MASQUERADE --to-ports 32768-65535
 ```
 
 #### Source-Specific NAT

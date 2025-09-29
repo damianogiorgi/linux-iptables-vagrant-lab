@@ -111,10 +111,10 @@ Now let's expose DMZ services through DNAT:
 vagrant ssh firewall
 
 # Expose DMZ web server through firewall's outside interface
-sudo iptables -t nat -A PREROUTING -i enp0s8 -p tcp --dport 80 -j DNAT --to-destination 192.168.100.10:80
+sudo iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 80 -j DNAT --to-destination 192.168.100.10:80
 
 # Allow the forwarded traffic through FORWARD chain
-sudo iptables -A FORWARD -i enp0s8 -o enp0s9 -p tcp --dport 80 -d 192.168.100.10 -j ACCEPT
+sudo iptables -A FORWARD -i eth1 -o eth2 -p tcp --dport 80 -d 192.168.100.10 -j ACCEPT
 
 # View the new rules
 sudo iptables -t nat -L PREROUTING -v -n
@@ -148,10 +148,10 @@ For security, let's expose SSH on a non-standard port:
 vagrant ssh firewall
 
 # Expose SSH on port 2222, mapping to DMZ server's port 22
-sudo iptables -t nat -A PREROUTING -i enp0s8 -p tcp --dport 2222 -j DNAT --to-destination 192.168.100.10:22
+sudo iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 2222 -j DNAT --to-destination 192.168.100.10:22
 
 # Allow the SSH traffic through FORWARD chain
-sudo iptables -A FORWARD -i enp0s8 -o enp0s9 -p tcp --dport 22 -d 192.168.100.10 -j ACCEPT
+sudo iptables -A FORWARD -i eth1 -o eth2 -p tcp --dport 22 -d 192.168.100.10 -j ACCEPT
 ```
 
 ### Step 6: Test SSH Port Forwarding

@@ -56,9 +56,8 @@ You should see the default ACCEPT policy we set during provisioning.
 
 ## 🔧 Exercise Steps
 
-### Step 1: Enable Packet Forwarding Statistics
+### Step 1: Ensure Packet Forwarding is enabled
 
-First, let's enable better tracking of what's happening:
 
 ```bash
 vagrant ssh firewall
