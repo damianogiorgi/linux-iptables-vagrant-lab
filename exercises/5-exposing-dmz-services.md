@@ -22,7 +22,7 @@ graph TB
     end
     
     subgraph "Outside Network (10.0.10.0/24)"
-        OS[Outside Server<br/>10.0.10.10<br/>(Simulates Internet)]
+        OS[Outside Server<br/>10.0.10.10<br/>Simulates Internet]
     end
     
     subgraph "Firewall"
