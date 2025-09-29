@@ -45,7 +45,7 @@ Vagrant.configure("2") do |config|
     fw.vm.provision "shell", inline: <<-SHELL
       # Update system
       apt-get update
-      apt-get install -y curl wget vim net-tools tcpdump
+      apt-get install -y curl wget net-tools tcpdump
       
       # Configure /etc/hosts for all lab VMs
       cat >> /etc/hosts << 'EOF'
@@ -109,7 +109,7 @@ EOF
     outside.vm.provision "shell", inline: <<-SHELL
       # Update system
       apt-get update
-      apt-get install -y apache2 curl wget vim net-tools tcpdump
+      apt-get install -y apache2 curl wget net-tools tcpdump
       
       # Configure /etc/hosts for all lab VMs
       cat >> /etc/hosts << 'EOF'
