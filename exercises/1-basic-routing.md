@@ -100,6 +100,20 @@ ping -c 3 dmz-server
 curl http://dmz-server
 ```
 
+Why it isn't working? By default, Linux does not route packet between interfaces, a kernel parameter (that can be configured dynamically), sets this behavior: 
+```bash
+vagrant ssh firewall
+
+cat /proc/sys/net/ipv4/ip_forward
+# Will return 0
+
+```
+To enable packet forwarding permanently 
+```bash
+echo 'net.ipv4.ip_forward=1' | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+```
+
 #### From DMZ Server to Internal Client:
 ```bash
 vagrant ssh dmz-server
