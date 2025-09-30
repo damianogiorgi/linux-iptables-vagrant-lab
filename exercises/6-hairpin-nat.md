@@ -44,6 +44,8 @@ The problem occurs because:
 
 ## 🔧 Exercise Steps
 
+**Note** Interfaces names may vary, so check everytime and don't trust that copying and pasting commands will work out of the box (it's a lab environment! 😊)
+
 ### Step 1: Reproduce the Hairpin NAT Problem
 
 First, let's demonstrate the issue:

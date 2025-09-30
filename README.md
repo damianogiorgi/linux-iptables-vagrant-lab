@@ -1,6 +1,6 @@
 # IPTables Network Lab
 
-This Vagrant-based lab environment provides a realistic network topology for learning Linux networking, iptables firewall rules, and network security concepts. The lab simulates a typical enterprise network with multiple network segments and a central firewall.
+This Vagrant-based lab environment provides a realistic network topology for learning Linux networking, iptables firewall rules, and network security concepts. The lab simulates a network with multiple segments and a central firewall.
 
 ## 🏗️ Network Architecture
 
@@ -39,12 +39,15 @@ graph TB
 
 ## 🖥️ Virtual Machines
 
+All machines have an interface on VirtualBox's NAT interface, so the provisioning scripts will work. For the client and dmz VMs, it will be overridden at provisioning time to set up correctly the lab scenario. 
+**Note** Interfaces names may vary, so check everytime and don't trust that copying and pasting commands will work out of the box (it's a lab environment! 😊)
+
 ### Firewall VM (`firewall`)
 - **Role**: Central router and firewall
 - **Interfaces**:
-  - `enp0s8`: 10.0.10.254/24 (Outside network)
-  - `enp0s9`: 192.168.100.254/24 (DMZ network)
-  - `enp0s10`: 192.168.200.254/24 (Internal LAN)
+  - `eth1`: 10.0.10.254/24 (Outside network)
+  - `eth2`: 192.168.100.254/24 (DMZ network)
+  - `eth3`: 192.168.200.254/24 (Internal LAN)
 - **Resources**: 1GB RAM, 2 CPUs
 - **Services**: iptables, IP forwarding enabled
 
@@ -52,21 +55,21 @@ graph TB
 - **Role**: Simulates external internet services
 - **IP**: 10.0.10.10/24
 - **Services**: Apache web server (port 80)
-- **Resources**: 512MB RAM, 1 CPU
+- **Resources**: 1024MB RAM, 1 CPU
 - **Gateway**: 10.0.10.254 (firewall)
 
 ### DMZ Server (`dmz-server`)
 - **Role**: Publicly accessible services in demilitarized zone
 - **IP**: 192.168.100.10/24
 - **Services**: Apache web server (port 80), SSH (port 22)
-- **Resources**: 512MB RAM, 1 CPU
+- **Resources**: 1024MB RAM, 1 CPU
 - **Gateway**: 192.168.100.254 (firewall)
 
 ### Internal Client (`internal-client`)
 - **Role**: Internal network client/workstation
 - **IP**: 192.168.200.10/24
 - **Services**: Web browsers, network testing tools
-- **Resources**: 512MB RAM, 1 CPU
+- **Resources**: 1024MB RAM, 1 CPU
 - **Gateway**: 192.168.200.254 (firewall)
 
 ## 🚀 Quick Start
@@ -112,7 +115,7 @@ iptables -L -v -n              # View current firewall rules
 ```bash
 # Monitor traffic on firewall
 sudo tcpdump -i any icmp       # Monitor ping traffic
-sudo tcpdump -i enp0s9 -n      # Monitor DMZ interface
+sudo tcpdump -i eth2 -n      # Monitor DMZ interface
 
 # Test connectivity from internal client
 vagrant ssh internal-client
@@ -188,11 +191,8 @@ vagrant ssh firewall           # SSH into firewall
 iptables -L -v -n              # List all rules with counters
 iptables -t nat -L -v -n       # List NAT rules
 
-# Save/restore rules
-netfilter-persistent save      # Save current rules
-netfilter-persistent reload    # Reload saved rules
 
-# Clear rules (DANGER!)
+# Clear rules
 iptables -F                    # Flush all rules
 iptables -t nat -F            # Flush NAT rules
 iptables -X                   # Delete custom chains

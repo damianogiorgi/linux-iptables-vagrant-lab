@@ -73,6 +73,8 @@ sequenceDiagram
 
 ## 🔧 Exercise Steps
 
+**Note** Interfaces names may vary, so check everytime and don't trust that copying and pasting commands will work out of the box (it's a lab environment! 😊)
+
 ### Step 1: Verify Current DMZ Service Status
 
 First, let's confirm what services are running in the DMZ:
